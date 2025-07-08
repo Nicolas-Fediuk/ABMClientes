@@ -1,0 +1,97 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+@inject IRepositorio repositorio
+@inject SweetAlertService swal
+
+<h1 class="text-center m-4">Lista de clientes</h1>
+
+<div class="container">
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Fecha de nacimiento</th>
+                <th scope="col">CUIT</th>
+                <th scope="col">Domicilio</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="p-5">
+            @foreach (var cliente in clientes)
+            {
+                <tr>
+                    <th>@cliente.CLIENTE_NOMBRES</th>
+
+                    <th>@cliente.CLIENTE_APELLIDOS</th>
+
+                    <th>@cliente.CLIENTE_FECNAC</th>
+
+                    <th>@cliente.CLIENTE_CUIT</th>
+
+                    <th>@cliente.CLIENTE_DOMICILIO</th>
+
+                    <th>@cliente.CLIENTE_TELEFONO</th>
+
+                    <th>@cliente.CLIENTE_EMAIL</th>
+
+                    <div>
+                        <button type="button" class="btn btn-warning" @onclick=@(() => navigationManager.NavigateTo($"/clientes/editar/{cliente.CLIENTE_ID}"))>Editar</button>
+                        <button type="button" class="btn btn-danger" @onclick=@(() => EliminarCliente(cliente.CLIENTE_ID))>Eliminar</button>
+                    </div>                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@code{
+    List<Cliente> clientes = new List<Cliente>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHttp = await repositorio.Get<List<Cliente>>("api/cliente");
+
+        if (responseHttp.HttpResponseMessage!.IsSuccessStatusCode)
+        {
+            clientes = responseHttp.Response!.ToList();
+        }
+        else
+        {
+            Console.WriteLine(responseHttp.HttpResponseMessage.IsSuccessStatusCode);
+        }
+
+    }
+
+    private async Task EliminarCliente(int id)
+    {
+        var confirmacion = await swal.FireAsync(new SweetAlertOptions
+        {
+            Title = "Atención",
+            Text = $"¿Esta seguro de eliminar el cliente con id: {id}?",
+            Icon = SweetAlertIcon.Warning,
+            ShowCancelButton = true,
+            ConfirmButtonText = "Ok",
+            CancelButtonText = "Cancelar"
+        });
+
+        if (!string.IsNullOrEmpty(confirmacion.Value))
+        {
+            var responseHttp = await repositorio.Delete($"api/cliente/eliminar/{id}");
+
+            if (responseHttp.Error)
+            {
+                var mensajeError = await responseHttp.ObtenerMensajeError();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+            else
+            {
+                await swal.FireAsync("Ok", "Cliente eliminado", SweetAlertIcon.Success);
+                await OnInitializedAsync();
+            }
+        }
+    }
+}
