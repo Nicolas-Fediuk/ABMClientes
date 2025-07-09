@@ -8,6 +8,8 @@ namespace ABMClientes.Server.Datos
         Task EditarCliente(Cliente cliente);
         Task EliminarCliente(int id);
         Task<Cliente> GetCliente(int id);
+        Task<IEnumerable<Cliente>> GetClienteConFiltro(ClienteFiltro clienteFiltro);
         Task<IEnumerable<Cliente>> GetClientes();
+        Task<IEnumerable<Cliente>> GetClientesId(int id);
     }
 }

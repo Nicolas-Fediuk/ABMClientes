@@ -22,6 +22,12 @@ namespace ABMClientes.Server.Controllers
             return await conexion.GetClientes();
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IEnumerable<Cliente>> GetId(int id)
+        {
+            return await conexion.GetClientesId(id);
+        }
+
         [HttpGet("editar/{id:int}")]
         public async Task<ActionResult<Cliente>> Get(int id)
         {
@@ -30,6 +36,14 @@ namespace ABMClientes.Server.Controllers
             cliente = await conexion.GetCliente(id);
 
             return Ok(cliente);
+        }
+
+        [HttpPost("filtro")]
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetClienteFiltro([FromBody] ClienteFiltro clienteFiltro)
+        {
+            var clientes = await conexion.GetClienteConFiltro(clienteFiltro);
+
+            return Ok(clientes);
         }
 
         [HttpPut("editar")]

@@ -62,6 +62,73 @@ namespace CineAPI.Datos.ADO.NET
             };
         }
 
+        public async Task<IEnumerable<Cliente>> GetClientesId(int id)
+        {
+            consultasSQL.AddParameter("id", DbType.String, id);
+
+            string query = @"select * from CLIENTES where CLIENTE_ID = @id";
+
+            DataTable dt = await consultasSQL.Search(query);
+
+            return dt.AsEnumerable().Select(row => new Cliente
+            {
+                CLIENTE_ID = row.Field<int>("CLIENTE_ID"),
+                CLIENTE_NOMBRES = row.Field<string>("CLIENTE_NOMBRES"),
+                CLIENTE_APELLIDOS = row.Field<string>("CLIENTE_APELLIDOS"),
+                CLIENTE_FECNAC = row.Field<DateTime>("CLIENTE_FECNAC"),
+                CLIENTE_CUIT = row.Field<string>("CLIENTE_CUIT"),
+                CLIENTE_DOMICILIO = row.Field<string>("CLIENTE_DOMICILIO"),
+                CLIENTE_TELEFONO = row.Field<string>("CLIENTE_TELEFONO"),
+                CLIENTE_EMAIL = row.Field<string>("CLIENTE_EMAIL")
+            });
+        }
+
+        public async Task<IEnumerable<Cliente>> GetClienteConFiltro(ClienteFiltro clienteFiltro)
+        {
+            try
+            {
+                consultasSQL.AddParameter("nombre", DbType.String, clienteFiltro.CLIENTE_NOMBRES);
+                consultasSQL.AddParameter("apellido", DbType.String, clienteFiltro.CLIENTE_APELLIDOS);
+                consultasSQL.AddParameter("cuit", DbType.String, clienteFiltro.CLIENTE_CUIT);
+
+                string query = @"select * from CLIENTES where 1=1";
+
+                if (!string.IsNullOrEmpty(clienteFiltro.CLIENTE_NOMBRES))
+                {
+                    query = query + " and CLIENTE_NOMBRES like '%'+@nombre+'%'";
+                }
+
+                if (!string.IsNullOrEmpty(clienteFiltro.CLIENTE_APELLIDOS))
+                {
+                    query = query + " and CLIENTE_APELLIDOS like '%'+@apellido+'%'";
+                }
+
+                if (!string.IsNullOrEmpty(clienteFiltro.CLIENTE_CUIT))
+                {
+                    query = query + " and CLIENTE_CUIT like '%'+@cuit+'%'";
+                }
+
+                DataTable dt = await consultasSQL.SearchWithParameters(query);
+
+                return dt.AsEnumerable().Select(row => new Cliente
+                {
+                    CLIENTE_ID = row.Field<int>("CLIENTE_ID"),
+                    CLIENTE_NOMBRES = row.Field<string>("CLIENTE_NOMBRES"),
+                    CLIENTE_APELLIDOS = row.Field<string>("CLIENTE_APELLIDOS"),
+                    CLIENTE_FECNAC = row.Field<DateTime>("CLIENTE_FECNAC"),
+                    CLIENTE_CUIT = row.Field<string>("CLIENTE_CUIT"),
+                    CLIENTE_DOMICILIO = row.Field<string>("CLIENTE_DOMICILIO"),
+                    CLIENTE_TELEFONO = row.Field<string>("CLIENTE_TELEFONO"),
+                    CLIENTE_EMAIL = row.Field<string>("CLIENTE_EMAIL")
+                });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public async Task EliminarCliente(int id)
         {
             consultasSQL.AddParameter("id",DbType.Int32, id);

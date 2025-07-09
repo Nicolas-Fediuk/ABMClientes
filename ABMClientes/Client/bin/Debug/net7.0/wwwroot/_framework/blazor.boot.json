@@ -199,15 +199,15 @@
       "mscorlib.dll": "sha256-UH9jptJH1wZ3XMBPuMMAEaUKpfRxc5AgXkLdAFAvNVE=",
       "netstandard.dll": "sha256-+jUzj0FB0YcoBUeSkSNEjhVDTG08qbZ2twfCBMbzT+Q=",
       "System.Private.CoreLib.dll": "sha256-l+\/quNqfNCSUDSMJcp0+IxlSdOdnAtwVVWMXmYGHMpg=",
-      "ABMClientes.Shared.dll": "sha256-o\/md46ISZdTFgLuEDtb4QvAqj1tAw6z6v+HFwLCrM1w=",
-      "ABMClientes.Client.dll": "sha256-x1mHEm8A41klD6bENfZtQcI3wPpcLnHgkGDmEI5KTq4="
+      "ABMClientes.Shared.dll": "sha256-Z7qTt7M9XhZWS43HIOAft3ljSe\/TVTvn38DOY9zKqJc=",
+      "ABMClientes.Client.dll": "sha256-rD7x9YqVM4VnPOh9lbJybNOfyZw5g4sFTAPK1kka6Jw="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "ABMClientes.Shared.pdb": "sha256-j2yLieWEWLat7yTDsj6INQolfLlegalElTltZcnok7k=",
-      "ABMClientes.Client.pdb": "sha256-Pu5IPlxvYxYy4tTooCsVusA6IH4zgmUqwhUZO6mS2nQ="
+      "ABMClientes.Shared.pdb": "sha256-DT47KmhS22O1eZ1qNmAJW9+tKuNHEapSwNX6Lr2kJlc=",
+      "ABMClientes.Client.pdb": "sha256-3O9hAMbvXIy2hHKfHG52lIeea+kXh3Nq+1R3Z+SXVS8="
     },
     "runtime": {
       "dotnet.7.0.1.ewq64v5ene.js": "sha256-jjax3FMRXzFAziWowdtJf6vipP2xXAaA5gD6VBYB6Y0=",
