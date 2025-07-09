@@ -14,7 +14,9 @@ Base URL: https://localhost:7172/
 
 #####  Obtener todos los clientes
 Metodo: GET
+
 URL: api/cliente
+
 Respuesta:
 ```json
 [
@@ -33,7 +35,9 @@ Respuesta:
 
 #####  Obtener cliente por ID
 Metodo: GET
+
 URL: api/cliente/{id}
+
 Respuesta:
 ```json
 [
@@ -54,7 +58,9 @@ Respuesta:
 
 #####  Obtener clientes filtrados
 Metodo: POST
+
 URL: api/cliente/filtro
+
 Respuesta:
 ```json
 [
@@ -73,7 +79,9 @@ Respuesta:
 
 #####  Editar cliente
 Metodo: PUT
+
 URL: api/cliente/editar
+
 Respuesta:
 ```json
   {
@@ -89,5 +97,7 @@ Respuesta:
 
 #####  Eliminar cliente
 Metodo: DELETE
+
 URL: api/cliente/eliminar/{id}
+
 Respuesta: Eliminado
