@@ -17,15 +17,31 @@ namespace ABMClientes.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Cliente>> Get()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Get()
         {
-            return await conexion.GetClientes();
+            try
+            {
+                var clientes = await conexion.GetClientes();
+                return Ok(clientes);    
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IEnumerable<Cliente>> GetId(int id)
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetId(int id)
         {
-            return await conexion.GetClientesId(id);
+            try
+            {
+                var cliente = await conexion.GetClientesId(id);
+                return Ok(cliente);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
         [HttpGet("editar/{id:int}")]
@@ -33,32 +49,51 @@ namespace ABMClientes.Server.Controllers
         {
             Cliente cliente = new Cliente();
 
-            cliente = await conexion.GetCliente(id);
-
-            return Ok(cliente);
+            try
+            {
+                var datosCliente = await conexion.GetCliente(id);
+                return Ok(datosCliente);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
         [HttpPost("filtro")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClienteFiltro([FromBody] ClienteFiltro clienteFiltro)
         {
-            var clientes = await conexion.GetClienteConFiltro(clienteFiltro);
-
-            return Ok(clientes);
+            try
+            {
+                var clientes = await conexion.GetClienteConFiltro(clienteFiltro);
+                return Ok(clientes);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
         [HttpPut("editar")]
         public async Task<ActionResult<Cliente>> Put(Cliente cliente)
         {
-            bool existeCuit = await conexion.VerificarCuitClienteExistente(cliente);
-
-            if (existeCuit)
+            try
             {
-                return BadRequest("El CUIT ingresado ya existe");
+                bool existeCuit = await conexion.VerificarCuitClienteExistente(cliente);
+
+                if (existeCuit)
+                {
+                    return BadRequest("El CUIT ingresado ya existe");
+                }
+
+                await conexion.EditarCliente(cliente);
+
+                return Ok();
             }
-
-            await conexion.EditarCliente(cliente);
-
-            return Ok();
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
         [HttpDelete("eliminar/{id:int}")]
@@ -80,11 +115,12 @@ namespace ABMClientes.Server.Controllers
                 }
 
                 await conexion.CrearCliente(cliente);
+
                 return Ok();    
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message); 
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         } 
     }

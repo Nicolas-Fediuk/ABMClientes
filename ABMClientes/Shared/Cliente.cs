@@ -24,15 +24,13 @@ namespace ABMClientes.Shared
         public DateTime CLIENTE_FECNAC { get; set; }
 
         [Required(ErrorMessage = "El campo CUIT es requerido.")]
-        [StringLength(12, MinimumLength = 10, ErrorMessage = "El CUIT debe tener entre 10 y 12 caracteres.")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "En el campo CUIT Solo se permiten números.")]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "En el campo CUIT Solo se permiten 11 números.")]
         public string CLIENTE_CUIT { get; set; }
 
         public string CLIENTE_DOMICILIO { get; set; }
 
         [Required(ErrorMessage = "El campo telefono es requerido")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "En el campo Telefono Solo se permiten números.")]
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "Deben ser 10 caracteres.")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "En el campo Telefono solo se permiten 10 números.")]
         public string CLIENTE_TELEFONO { get; set; }
 
         [Required(ErrorMessage = "El campo email es requerido.")]
