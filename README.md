@@ -40,18 +40,16 @@ URL: api/cliente/{id}
 
 Respuesta:
 ```json
-[
-  {
-    "cliente_ID": 1,
-    "cliente_NOMBRES": "Nicolas",
-    "cliente_APELLIDOS": "Fediuk",
-    "cliente_FECNAC": "1998-11-23",
-    "cliente_CUIT": "20123456789",
-    "cliente_DOMICILIO": "Calle Falsa 123",
-    "cliente_TELEFONO": "123456789",
-    "cliente_EMAIL": "nf@gmail.com"
-  }
-]
+{
+  "cliente_ID": 1,
+  "cliente_NOMBRES": "Nicolas",
+  "cliente_APELLIDOS": "Fediuk",
+  "cliente_FECNAC": "1998-11-23",
+  "cliente_CUIT": "20123456789",
+  "cliente_DOMICILIO": "Calle Falsa 123",
+  "cliente_TELEFONO": "123456789",
+  "cliente_EMAIL": "nf@gmail.com"
+}
 ```
 
 
@@ -77,23 +75,19 @@ Respuesta:
 ]
 ```
 
+#####  Crear clientes
+Metodo: POST
+
+URL: api/cliente/crear
+
+Respuesta: OK, BadRequest o Server Error
+
 #####  Editar cliente
 Metodo: PUT
 
 URL: api/cliente/editar
 
-Respuesta:
-```json
-  {
-    "cliente_NOMBRES": "Nicolas",
-    "cliente_APELLIDOS": "Fediuk",
-    "cliente_FECNAC": "1998-11-23",
-    "cliente_CUIT": "20123456789",
-    "cliente_DOMICILIO": "Calle Falsa 123",
-    "cliente_TELEFONO": "123456789",
-    "cliente_EMAIL": "nf@gmail.com"
-  }
-```
+Respuesta: OK, BadRequest o Server Error
 
 #####  Eliminar cliente
 Metodo: DELETE
