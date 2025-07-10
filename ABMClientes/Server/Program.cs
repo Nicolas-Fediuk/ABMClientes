@@ -1,4 +1,5 @@
 using ABMClientes.Server.Datos;
+using ABMClientes.Server.Middleware;
 using CineAPI.Datos.ADO.NET;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -36,6 +37,8 @@ app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
+
+app.UseMiddleware<LogError>();
 
 app.UseRouting();
 

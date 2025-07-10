@@ -5,38 +5,42 @@
 
 <h1 class="text-center m-4">Lista de clientes</h1>
 
-<div>
-    <input type="text" @bind="ClienteId" @bind:after="BuscarClienteId"/>
+<div class="container d-flex align-items-center justify-content-around m-4">
+    <div class="m-1">
+        <input placeholder="Filtrar por ID" type="text" @bind="ClienteId" @bind:after="BuscarClienteId" />
+    </div>
+
+    <div>
+        <EditForm Model="clienteFiltro" OnValidSubmit="BuscarClienteFiltro">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="m-1">
+                     <input placeholder="Nombre" class="form-control" @bind="@clienteFiltro.CLIENTE_NOMBRES" />
+                </div>
+
+                <div class="m-1">
+
+                    <input placeholder="Apellido" class="form-control" @bind="@clienteFiltro.CLIENTE_APELLIDOS" />
+
+                </div>
+
+                <div class="m-1">
+                     <input placeholder="CUIT" class="form-control" @bind="@clienteFiltro.CLIENTE_CUIT" />
+                </div>
+                <div class="m-1">
+                    <button class="btn btn-success mb-2">Buscar</button>
+
+                </div>
+                <div class="m-1">
+                    <button class="btn btn-success mb-2" @onclick="LimpiarFiltros">Limpiar filtros</button>
+                </div>
+                
+            </div>
+            
+
+        </EditForm>
+    </div>
 </div>
 
-<div>
-    <EditForm Model="clienteFiltro" OnValidSubmit="BuscarClienteFiltro">
-        <div class="mb-3">
-            <label>Nombres:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@clienteFiltro.CLIENTE_NOMBRES" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Apellidos:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@clienteFiltro.CLIENTE_APELLIDOS" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>CUIT:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@clienteFiltro.CLIENTE_CUIT" />
-            </div>
-        </div>
-
-        <button class="btn btn-success mb-2">Buscar</button>
-        <button class="btn btn-success mb-2" @onclick="LimpiarFiltros">Limpiar filtros</button>
-
-    </EditForm>
-</div>
 
 <div class="container">
     <table class="table text-center">
@@ -63,7 +67,7 @@
 
                     <th>@cliente.CLIENTE_APELLIDOS</th>
 
-                    <th>@cliente.CLIENTE_FECNAC</th>
+                    <th>@cliente.CLIENTE_FECNAC.ToString("dd/MM/yyyyy")</th>
 
                     <th>@cliente.CLIENTE_CUIT</th>
 

@@ -209,5 +209,52 @@ namespace CineAPI.Datos.ADO.NET
                 Console.WriteLine(ex.ToString());
             }
         }
+
+        public async Task<bool> VerificarCuit(string cuit)
+        {
+            consultasSQL.AddParameter("cuit",DbType.String, cuit);
+
+            string query = @"select 1 from CLIENTES where CLIENTE_CUIT = @cuit";
+
+            DataTable dt = await consultasSQL.SearchWithParameters(query);
+
+            return dt.Rows.Count > 0;
+        }
+
+        public async Task PostError(LogErrores logErrores)
+        {
+            consultasSQL.AddParameter("fecha", DbType.DateTime, logErrores.LOG_FECHA);
+            consultasSQL.AddParameter("ruta", DbType.String, logErrores.LOG_RUTA);
+            consultasSQL.AddParameter("msg", DbType.String, logErrores.LOG_MSG);
+
+            string query = @"insert into LOG_ERRORES
+                                          (
+                                            LOG_FECHA,
+                                            LOG_RUTA,
+                                            LOG_MSG
+                                          )
+                                        Values
+                                          (
+                                            @fecha,
+                                            @ruta,
+                                            @msg
+                                          )";
+
+            await consultasSQL.ExecuteQueryWithParameters(query);
+        }
+
+        public async Task<bool> VerificarCuitClienteExistente(Cliente cliente)
+        {
+            consultasSQL.AddParameter("cuit", DbType.String, cliente.CLIENTE_CUIT);
+            consultasSQL.AddParameter("id", DbType.Int32, cliente.CLIENTE_ID);
+
+            string query = @"select 1 from CLIENTES where CLIENTE_CUIT = @cuit and CLIENTE_ID <> @id";
+
+            DataTable dt = await consultasSQL.SearchWithParameters(query);
+
+            return dt.Rows.Count > 0;
+        }
+
+        
     }
 }

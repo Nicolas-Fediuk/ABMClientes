@@ -7,69 +7,8 @@
 
 
 <div class="container">
-    <EditForm Model="cliente" OnValidSubmit="EditarCliente">
-        <DataAnnotationsValidator />
-        <div class="mb-3">
-            <label>Nombres:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_NOMBRES" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_NOMBRES)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Apellidos:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_APELLIDOS" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_APELLIDOS)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Fecha de nacimiento:</label>
-            <div>
-                <InputDate class="form-control" @bind-Value="@cliente.CLIENTE_FECNAC" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_FECNAC)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>CUIT:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_CUIT" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_CUIT)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Domicilio:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_DOMICILIO" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_DOMICILIO)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Telefono:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_TELEFONO" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_TELEFONO)" />
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label>Email:</label>
-            <div>
-                <InputText class="form-control" @bind-Value="@cliente.CLIENTE_EMAIL" />
-                <ValidationMessage For="@(() => cliente.CLIENTE_EMAIL)" />
-            </div>
-        </div>
-
-        <button class="btn btn-success mb-2">Guardar cambios</button>
-
-    </EditForm>
+    <FormularioCliente cliente="cliente" OnValidSubmit="EditarCliente" />
 </div>
-
 
 
 

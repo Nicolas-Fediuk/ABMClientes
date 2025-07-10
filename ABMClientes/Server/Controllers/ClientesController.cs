@@ -49,6 +49,13 @@ namespace ABMClientes.Server.Controllers
         [HttpPut("editar")]
         public async Task<ActionResult<Cliente>> Put(Cliente cliente)
         {
+            bool existeCuit = await conexion.VerificarCuitClienteExistente(cliente);
+
+            if (existeCuit)
+            {
+                return BadRequest("El CUIT ingresado ya existe");
+            }
+
             await conexion.EditarCliente(cliente);
 
             return Ok();
@@ -56,7 +63,7 @@ namespace ABMClientes.Server.Controllers
 
         [HttpDelete("eliminar/{id:int}")]
         public async Task Delete(int id)
-        {           
+        {
             await conexion.EliminarCliente(id);
         }
 
@@ -65,6 +72,13 @@ namespace ABMClientes.Server.Controllers
         {
             try
             {
+                bool existeCuit = await conexion.VerificarCuit(cliente.CLIENTE_CUIT.Trim());
+
+                if (existeCuit)
+                {
+                    return BadRequest("El CUIT ingresado ya existe");
+                }
+
                 await conexion.CrearCliente(cliente);
                 return Ok();    
             }
