@@ -154,17 +154,34 @@
         }
     }
 
-    public async Task BuscarClienteFiltro()
-    {
+    /*public async Task BuscarClienteFiltro()
+        {
         var httpResponse = await repositorio.Post<ClienteFiltro, List<Cliente>>("api/cliente/filtro", clienteFiltro);
 
         if (httpResponse.HttpResponseMessage!.IsSuccessStatusCode)
+            {
+            clientes = httpResponse.Response!.ToList();
+        }
+        else
+            {
+            Console.WriteLine(httpResponse.HttpResponseMessage.IsSuccessStatusCode);
+    }
+    }*/
+
+    public async Task BuscarClienteFiltro()
+    {
+        var url = $"api/cliente/filtro?CLIENTE_NOMBRES={clienteFiltro.CLIENTE_NOMBRES}&CLIENTE_APELLIDOS={clienteFiltro.CLIENTE_APELLIDOS}&CLIENTE_CUIT={clienteFiltro.CLIENTE_CUIT}";
+        
+        var httpResponse = await repositorio.Get<List<Cliente>>(url);
+
+        if (!httpResponse.Error)
         {
             clientes = httpResponse.Response!.ToList();
         }
         else
         {
-            Console.WriteLine(httpResponse.HttpResponseMessage.IsSuccessStatusCode);
+            var mensaje = await httpResponse.ObtenerMensajeError();
+            await swal.FireAsync("Error", $"Error al filtrar los clientes", SweetAlertIcon.Error);
         }
     }
 
@@ -173,4 +190,25 @@
         clienteFiltro = new ClienteFiltro();
         await OnInitializedAsync();
     }
+
+    /*public string ConstruirUrl(string url, ClienteFiltro filtro)
+    {
+        var query = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(filtro.CLIENTE_NOMBRES))
+            query.Add($"CLIENTE_NOMBRES={filtro.CLIENTE_NOMBRES}");
+
+        if (!string.IsNullOrWhiteSpace(filtro.CLIENTE_APELLIDOS))
+            query.Add($"CLIENTE_APELLIDOS={filtro.CLIENTE_APELLIDOS}");
+
+        if (!string.IsNullOrWhiteSpace(filtro.CLIENTE_CUIT))
+            query.Add($"CLIENTE_CUIT={filtro.CLIENTE_CUIT}");
+
+        if (query.Count == 0)
+        {
+            return url;
+        }
+    
+        return $"{url}?{string.Join("&", query)}";
+    }*/
 }

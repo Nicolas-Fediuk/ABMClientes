@@ -22,7 +22,7 @@ namespace ABMClientes.Server.Controllers
             try
             {
                 var clientes = await conexion.GetClientes();
-                return Ok(clientes);    
+                return Ok(clientes);  
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace ABMClientes.Server.Controllers
             }
         }
 
-        [HttpPost("filtro")]
+        /*[HttpPost("filtro")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClienteFiltro([FromBody] ClienteFiltro clienteFiltro)
         {
             try
@@ -69,6 +69,27 @@ namespace ABMClientes.Server.Controllers
                 return Ok(clientes);
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }*/
+
+        [HttpGet("filtro")]
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetClienteFiltro([FromQuery] string? CLIENTE_NOMBRES,[FromQuery] string? CLIENTE_APELLIDOS,[FromQuery] string? CLIENTE_CUIT)
+        {
+            var filtro = new ClienteFiltro
+            {
+                CLIENTE_NOMBRES = CLIENTE_NOMBRES,
+                CLIENTE_APELLIDOS = CLIENTE_APELLIDOS,
+                CLIENTE_CUIT = CLIENTE_CUIT
+            };
+
+            try
+            {
+                var clientes = await conexion.GetClienteConFiltro(filtro);
+                return Ok(clientes);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }

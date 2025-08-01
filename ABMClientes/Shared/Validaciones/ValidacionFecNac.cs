@@ -22,7 +22,7 @@ namespace CineAPI.Validaciones
                     return new ValidationResult("Tenés que ser mayor de 18 años.");
                 }
 
-                if(fechaDeNac >= DateTime.Now && fechaDeNac <= DateTime.Now.AddYears(-200))
+                if(fechaDeNac >= hoy || fechaDeNac <= DateTime.Today.AddYears(-150))
                 {
                     return new ValidationResult("Ingrese una fecha de nacimiento valido.");
                 }

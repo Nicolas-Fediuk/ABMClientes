@@ -29,7 +29,7 @@ namespace ABMClientes.Client.Repositorios
             }
             else
             {
-                return new HttpResponseWrapper<T>(default,error:false, respuestaHTTP);
+                return new HttpResponseWrapper<T>(default,error:true, respuestaHTTP);
             }
         } 
 
